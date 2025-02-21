@@ -1,0 +1,31 @@
+name: Build OpenTabletDriver Avalonia
+
+on:
+  push:
+    branches:
+      - avalonia  # This is the branch you want to build
+  pull_request:
+    branches:
+      - avalonia  # Trigger on pull requests to the `avalonia` branch
+
+jobs:
+  build:
+    runs-on: windows-latest  # This project needs Windows to build correctly
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.x'  # Adjust the .NET version if needed
+
+    - name: Restore dependencies
+      run: dotnet restore OpenTabletDriver.sln
+
+    - name: Build the solution
+      run: dotnet build OpenTabletDriver.sln --configuration Release
+
+    - name: Publish the executable
+      run: dotnet publish OpenTabletDriver.sln --configuration Release --output ./publish
