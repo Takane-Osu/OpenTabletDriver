@@ -1,0 +1,12 @@
+image: Visual Studio 2022
+
+configuration: Release
+
+build_script:
+  - dotnet restore OpenTabletDriver.sln
+  - dotnet build OpenTabletDriver.sln --configuration Release
+  - dotnet publish OpenTabletDriver.sln --configuration Release --output ./publish
+
+artifacts:
+  - path: ./publish
+    name: OpenTabletDriver-Build
